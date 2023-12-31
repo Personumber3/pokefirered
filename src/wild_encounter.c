@@ -230,12 +230,16 @@ static void GenerateWildMon(u16 species, u8 level, u8 slot)
     ZeroEnemyPartyMons();
     if (species != SPECIES_UNOWN)
     {
+        // if Player Name == HARD, SET_IVS = 0, else SET_IVS = 31; otherwise just set them = to enemy trainer ivs. 
+        // you could also make them depend on trainer ID, so some trainers are better than others, if you want to be evil.
         CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, Random() % NUM_NATURES);
     }
     else
     {
         chamber = gSaveBlock1Ptr->location.mapNum - MAP_NUM(SEVEN_ISLAND_TANOBY_RUINS_MONEAN_CHAMBER);
         personality = GenerateUnownPersonalityByLetter(sUnownLetterSlots[chamber][slot]);
+        
+        // if Player Name == HARD, SET_IVS = 0, else SET_IVS = 31;
         CreateMon(&gEnemyParty[0], species, level, USE_RANDOM_IVS, TRUE, personality, FALSE, 0);
     }
 }
